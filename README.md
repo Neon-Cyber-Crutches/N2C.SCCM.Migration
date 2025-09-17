@@ -2,9 +2,15 @@
 
 Powershell module to assist in SCCM migration.
 
-This module is in early development stage. But it was tested in SCCM Collection migration process.
+This module is in early development stage иut it was tested in real SCCM Collection migration process.
 
-You could use functions from this script if you are in need.
+## Install Module
+
+You could install this module from PSGallery
+
+```Powershell
+Install-Module N2C.SCCM.Migration
+```
 
 ## Implemented Features
 
@@ -32,20 +38,19 @@ You could use functions from this script if you are in need.
 
 Let's say you need to migrate `User` and `Device` collections from `Old_SCCM` to `New_SCCM`.
 
-First import functions from `SCCMCollectionMigration.ps1` at `Old_SCCM` instance.
+First import `N2C.SCCM.Migration` module at `Old_SCCM` instance.
 
 ```Powershell
-. .\SCCMCollectionMigration.ps1
+Import-Module N2C.SCCM.Migration
 ```
 
 Then at `Old_SCCM` you could export all your collections metadata which will be used to recreate collections at `New_SCCM` like so:
 
 ```Powershell
-$CollectionsMetadata = Export-xCMCollections
-$CollectionsMetadata | Export-Clixml -Path 'C:\collections_export_file.clixml' -Encoding UTF8
+Export-CMCollectionsMetadata -SiteCode 'ABC' -ProviderMachineName 'sccm_server.domain.com' -Path 'C:\collections_export_file.clixml'
 ```
 
-Next using `collections_export_file.clixml` file at `New_SCCM` you could recreate collections like so:
+Next, using `collections_export_file.clixml` file at `New_SCCM` you could recreate collections like so:
 
 ```Powershell
 Import-CMCollectionsFromMetadata -Path 'C:\collections_export_file.clixml' -SiteCode 'ABC' -ProviderMachineName 'sccm_server.domain.com'
