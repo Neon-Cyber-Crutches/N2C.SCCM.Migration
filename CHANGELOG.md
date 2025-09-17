@@ -9,4 +9,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- For new features.
+- Added Import-CMCollectionsFromMetadata
+- Added Export-CMCollectionsMetadata
